@@ -1,27 +1,40 @@
 use std::fs::read_to_string;
 
-pub fn day1_part1() {
-    let file_input = read_to_string("input/day1.txt").unwrap();
+use crate::days::AocDay;
 
-    let turns = file_input.trim().split("\n").map(|x| x.split_at(1));
+pub struct Day1;
 
-    let mut dial = 50;
+impl AocDay for Day1 {
+    fn part1() {
+        let file_input = read_to_string("input/day1.txt").unwrap();
 
-    let mut count = 0;
+        let turns = file_input.trim().split("\n").map(|x| x.split_at(1));
 
-    for (c, val) in turns {
-        let turn: i64 = val.parse().unwrap();
-        match c {
-            "L" => dial -= turn,
-            _ => dial += turn,
+        let mut dial = 50;
+
+        let mut count = 0;
+
+        for (c, val) in turns {
+            let turn: i64 = val.parse().unwrap();
+            match c {
+                "L" => dial -= turn,
+                _ => dial += turn,
+            }
+            dial = dial.strict_rem_euclid(100);
+            if dial == 0 {
+                count += 1;
+            }
         }
-        dial = dial.strict_rem_euclid(100);
-        if dial == 0 {
-            count += 1;
-        }
+
+        println!("{:?}", count)
     }
 
-    println!("{:?}", count)
+    fn part2() {
+        let file_input = read_to_string("input/day1.txt").unwrap();
+        let count = click(&file_input);
+
+        println!("{:?}", count);
+    }
 }
 
 #[cfg(test)]
@@ -115,11 +128,4 @@ fn click(input: &str) -> i64 {
     }
 
     count
-}
-
-pub fn day1_part2() {
-    let file_input = read_to_string("input/day1.txt").unwrap();
-    let count = click(&file_input);
-
-    println!("{:?}", count);
 }
