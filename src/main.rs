@@ -2,7 +2,8 @@ use crate::days::AocDay;
 
 mod days;
 mod aoc_iteratorutils;
+mod utils;
 
 fn main() {
-    days::day3::Day3::run();
+    days::day4::Day4::run();
 }
