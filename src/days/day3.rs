@@ -1,7 +1,5 @@
 use aoc::AocDay;
-use std::{fs::read_to_string};
-
-
+use std::fs::read_to_string;
 
 pub struct Day3;
 

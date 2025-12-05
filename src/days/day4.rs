@@ -1,9 +1,9 @@
-use aoc::utils::PosWithinBounds;
-use aoc::utils::PosToIndex;
 use aoc::utils::Directions;
-use std::fs::read_to_string;
 use aoc::utils::IndexToPos;
+use aoc::utils::PosToIndex;
+use aoc::utils::PosWithinBounds;
 use itertools::Itertools;
+use std::fs::read_to_string;
 
 use aoc::AocDay;
 
