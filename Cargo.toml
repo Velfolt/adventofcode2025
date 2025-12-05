@@ -3,5 +3,9 @@ name = "adventofcode2025"
 version = "0.1.0"
 edition = "2024"
 
+[lib]
+name = "aoc"
+path = "src/lib.rs"
+
 [dependencies]
 itertools = "0.14.0"

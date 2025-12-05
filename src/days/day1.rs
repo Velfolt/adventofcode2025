@@ -1,6 +1,6 @@
 use std::fs::read_to_string;
 
-use crate::days::AocDay;
+use aoc::AocDay;
 
 pub struct Day1;
 

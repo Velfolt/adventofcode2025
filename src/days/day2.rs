@@ -2,7 +2,7 @@ use std::fs::read_to_string;
 
 use itertools::Itertools;
 
-use crate::days::AocDay;
+use aoc::AocDay;
 
 pub struct Day2;
 

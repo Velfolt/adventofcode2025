@@ -1,4 +1,4 @@
-use std::{fmt::Debug, fs::read_to_string};
+use std::fmt::Debug;
 
 pub struct InspectPrint<I: Iterator> {
     iter: I,

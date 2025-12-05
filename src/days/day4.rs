@@ -1,11 +1,11 @@
+use aoc::utils::PosWithinBounds;
+use aoc::utils::PosToIndex;
+use aoc::utils::Directions;
 use std::fs::read_to_string;
-
+use aoc::utils::IndexToPos;
 use itertools::Itertools;
 
-use crate::{
-    days::AocDay,
-    utils::{Directions, IndexToPos, PosToIndex, PosWithinBounds},
-};
+use aoc::AocDay;
 
 pub struct Day4;
 impl AocDay for Day4 {

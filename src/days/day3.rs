@@ -1,8 +1,7 @@
-use std::{cmp::max, fs::read_to_string};
+use aoc::AocDay;
+use std::{fs::read_to_string};
 
-use itertools::Itertools;
 
-use crate::{aoc_iteratorutils::AdventOfCodeIteratorUtils, days::AocDay};
 
 pub struct Day3;
 
