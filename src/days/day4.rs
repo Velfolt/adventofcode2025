@@ -60,9 +60,11 @@ fn rolls_to_remove<'a>(
     width: &'a usize,
     grid: &'a Vec<(usize, char)>,
 ) -> impl Iterator<Item = (usize, char)> {
-    grid.iter().cloned().filter(|(i, c)| {
-        *c == '@'
-            && i.to_pos(*width)
+    grid.iter()
+        .cloned()
+        .filter(|(_, c)| *c == '@')
+        .filter(|(i, c)| {
+            i.to_pos(*width)
                 .all_directions()
                 .iter()
                 .filter(|pos| {
@@ -72,5 +74,5 @@ fn rolls_to_remove<'a>(
                 })
                 .count()
                 < 4
-    })
+        })
 }

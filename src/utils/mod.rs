@@ -1,4 +1,4 @@
-use std::ops::{Add, Mul, Sub};
+use std::ops::{Add, Mul, RangeInclusive, Sub};
 
 use itertools::Itertools;
 
@@ -101,7 +101,7 @@ impl Sub for Point {
     type Output = (i64, i64);
 
     fn sub(self, rhs: Self) -> Self::Output {
-        (self.0 .0 - rhs.0 .0, self.0 .1 - rhs.0 .1)
+        (self.0.0 - rhs.0.0, self.0.1 - rhs.0.1)
     }
 }
 
@@ -109,7 +109,7 @@ impl Add for Point {
     type Output = (i64, i64);
 
     fn add(self, rhs: Self) -> Self::Output {
-        (self.0 .0 + rhs.0 .0, self.0 .1 + rhs.0 .1)
+        (self.0.0 + rhs.0.0, self.0.1 + rhs.0.1)
     }
 }
 
@@ -117,6 +117,6 @@ impl Mul<i64> for Point {
     type Output = (i64, i64);
 
     fn mul(self, rhs: i64) -> Self::Output {
-        (self.0 .0 * rhs, self.0 .1 * rhs)
+        (self.0.0 * rhs, self.0.1 * rhs)
     }
 }

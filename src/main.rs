@@ -5,5 +5,5 @@ mod aoc_iteratorutils;
 mod utils;
 
 fn main() {
-    days::day4::Day4::run();
+    days::day5::Day5::run();
 }
