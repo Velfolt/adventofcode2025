@@ -1,6 +1,6 @@
 use std::fs::read_to_string;
 
-use aoc::AocDay;
+use aoc::{AocDay, aoc_iteratorutils::AdventOfCodeIteratorUtils};
 use itertools::Itertools;
 
 pub struct Day6;
@@ -98,4 +98,75 @@ impl AocDay for Day6 {
 
         println!("{sum}");
     }
+}
+
+fn cephalopod_rparse() {
+    let input = read_to_string("input/day6.txt").unwrap();
+
+    // let input = "123 328  51 64
+    //  45 64  387 23
+    //   6 98  215 314
+    // *   +   *   +  ";
+
+    let lines = input.lines().collect_vec();
+    let len = lines.first().unwrap().len();
+
+    let mut sum = 0;
+
+    let mut numbers = vec![];
+    for i in (0..len).rev() {
+        let mut number = vec![];
+
+        for line in &lines {
+            let c = line.as_bytes().get(i).or(None);
+            if let Some(c) = c
+                && *c as char != ' '
+            {
+                match *c as char {
+                    '*' => {
+                        numbers.push(
+                            number
+                                .iter()
+                                .rev()
+                                .enumerate()
+                                .map(|(ii, n)| n * 10_i64.pow(ii as u32))
+                                .sum(),
+                        );
+
+                        sum += numbers.iter().filter(|n| **n != 0).product::<i64>();
+                        numbers.clear();
+                        number.clear();
+                    }
+                    '+' => {
+                        numbers.push(
+                            number
+                                .iter()
+                                .rev()
+                                .enumerate()
+                                .map(|(ii, n)| n * 10_i64.pow(ii as u32))
+                                .sum(),
+                        );
+
+                        sum += numbers.iter().sum::<i64>();
+                        numbers.clear();
+                        number.clear();
+                    }
+                    _ => {
+                        number.push(*c as i64 - '0' as i64);
+                    }
+                }
+            }
+        }
+
+        numbers.push(
+            number
+                .iter()
+                .rev()
+                .enumerate()
+                .map(|(ii, n)| n * 10_i64.pow(ii as u32))
+                .sum(),
+        );
+    }
+
+    println!("{sum}")
 }
