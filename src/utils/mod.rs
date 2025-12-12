@@ -66,6 +66,14 @@ impl Distance for ((i64, i64), (i64, i64)) {
     }
 }
 
+impl Distance for ((i64, i64, i64), (i64, i64, i64)) {
+    fn distance(self) -> usize {
+        let (a, b) = self;
+
+        ((a.0 - b.0).pow(2) + (a.1 - b.1).pow(2) + (a.2 - b.2).pow(2)).isqrt() as usize
+    }
+}
+
 pub trait Directions {
     fn directions(&self) -> [(i64, i64); 4];
     fn all_directions(&self) -> [(i64, i64); 8];
