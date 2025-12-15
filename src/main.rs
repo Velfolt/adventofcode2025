@@ -3,5 +3,5 @@ use aoc::AocDay;
 mod days;
 
 fn main() {
-    days::day8::Day8::run();
+    days::day9::Day9::run();
 }
