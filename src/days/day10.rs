@@ -1,7 +1,4 @@
-use std::{
-    collections::HashMap,
-    fs::read_to_string,
-};
+use std::{collections::HashMap, fs::read_to_string};
 
 use aoc::AocDay;
 use itertools::{Itertools, repeat_n};
@@ -40,11 +37,14 @@ impl AocDay for Day10 {
         let input = read_to_string("input/day10.txt").unwrap();
 
         let mut cache = HashMap::new();
+        let mut combination_cache = HashMap::new();
 
         let a = input
             .lines()
             .map(|l| line(l).unwrap().1)
-            .map(|(_, buttons, goal)| find_min_joltage(&buttons, &goal, &mut cache))
+            .map(|(_, buttons, goal)| {
+                find_min_joltage(&buttons, &goal, &mut cache, &mut combination_cache)
+            })
             .sum::<usize>();
 
         println!("{a}");
@@ -55,6 +55,7 @@ fn find_min_joltage(
     buttons: &Vec<Vec<usize>>,
     goal: &Vec<i64>,
     cache: &mut HashMap<(Vec<Vec<usize>>, Vec<i64>), usize>,
+    combination_cache: &mut HashMap<(Vec<Vec<usize>>, Vec<bool>), Vec<(Vec<bool>, Vec<Vec<usize>>)>>,
 ) -> usize {
     if let Some(len) = cache.get(&(buttons.clone(), goal.clone())) {
         return *len;
@@ -65,7 +66,20 @@ fn find_min_joltage(
     }
 
     let odd = goal.iter().map(|x| x % 2 == 1).collect_vec();
-    let combinations = combinations(buttons, &odd)
+
+    let combinations = {
+        if let Some(comb) = combination_cache.get(&(buttons.clone(), odd.clone())) {
+            comb.clone()
+        } else {
+            let combinations = combinations(buttons, &odd);
+
+            combination_cache.insert((buttons.clone(), odd), combinations.clone());
+
+            combinations
+        }
+    };
+
+    let combinations = combinations
         .iter()
         .map(|(_, c)| {
             c.iter().fold((goal.clone(), c), |(acc, c), button| {
@@ -76,9 +90,9 @@ fn find_min_joltage(
                 (s, c)
             })
         })
-        .filter(|(s, _)| s.iter().all(|x| *x >= 0))
+	.filter(|(s, _)| s.iter().all(|x| *x >= 0))
         .map(|(s, c)| (s.iter().map(|c| c / 2).collect_vec(), c))
-        .map(|(s, c)| 2 * find_min_joltage(buttons, &s, cache) + c.len())
+        .map(|(s, c)| 2 * find_min_joltage(buttons, &s, cache, combination_cache) + c.len())
         .min();
 
     if let Some(min) = combinations {

@@ -1,29 +1,15 @@
-use std::{collections::{HashMap, VecDeque}, fs::read_to_string};
+use std::{
+    collections::{HashMap, VecDeque},
+    fs::read_to_string,
+};
 
 use aoc::{
     AocDay,
-    utils::{IndexToPos, Point, PosToIndex, PosWithinBounds, PrintGrid},
+    utils::{IndexToPos, Point, PosToIndex, PosWithinBounds},
 };
 use itertools::Itertools;
 
 pub struct Day7;
-
-static INPUT: &str = ".......S.......
-...............
-.......^.......
-...............
-......^.^......
-...............
-.....^.^.^.....
-...............
-....^.^...^....
-...............
-...^.^...^.^...
-...............
-..^...^.....^..
-...............
-.^.^.^.^.^...^.
-...............";
 
 impl AocDay for Day7 {
     fn part1() {
@@ -85,17 +71,23 @@ impl AocDay for Day7 {
         let gridstr = input.trim().lines().join("");
         let start = gridstr.find(|c| c == 'S').unwrap();
 
-	let mut cache = HashMap::new();
+        let mut cache = HashMap::new();
 
         let total = particle_step(start.to_pos(width), 1, width, &gridstr, &mut cache);
 
-	println!("{total}");
+        println!("{total}");
     }
 }
 
-fn particle_step(pos: (i64, i64), timelines: i64, width: usize, grid: &str, cache: &mut HashMap<(i64, i64), i64>) -> i64 {
+fn particle_step(
+    pos: (i64, i64),
+    timelines: i64,
+    width: usize,
+    grid: &str,
+    cache: &mut HashMap<(i64, i64), i64>,
+) -> i64 {
     if let Some(timeline) = cache.get(&pos) {
-	return *timeline;
+        return *timeline;
     }
 
     if !pos.within_bounds(width) {
@@ -109,16 +101,16 @@ fn particle_step(pos: (i64, i64), timelines: i64, width: usize, grid: &str, cach
             let pos_left = Point(next_pos) + Point((-1, 0));
             let pos_right = Point(next_pos) + Point((1, 0));
 
-	    let l = particle_step(pos_left, timelines, width, grid, cache);
-	    let r = particle_step(pos_right, timelines, width, grid, cache);
+            let l = particle_step(pos_left, timelines, width, grid, cache);
+            let r = particle_step(pos_right, timelines, width, grid, cache);
 
-	    cache.insert(pos_left, l);
-	    cache.insert(pos_right, r);
+            cache.insert(pos_left, l);
+            cache.insert(pos_right, r);
 
-	    return l + r;
+            return l + r;
         }
         _ => {
-	    return particle_step(next_pos, timelines, width, grid, cache);
-	}
+            return particle_step(next_pos, timelines, width, grid, cache);
+        }
     }
 }

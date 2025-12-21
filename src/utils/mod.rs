@@ -133,7 +133,7 @@ impl Mul<i64> for Point {
 pub fn plot(
     p1: (i64, i64),
     p2: (i64, i64),
-    mut plot: impl FnMut((i64, i64)) -> Option<()>,
+    plot: impl FnMut((i64, i64)) -> Option<()>,
 ) -> Option<()> {
     if (p2.1 - p1.1).abs() < (p2.0 - p1.0).abs() {
         if p1.0 > p2.0 {
@@ -164,7 +164,7 @@ fn plot_line_low(
         dy = -dy;
     }
 
-    let mut D = (2 * dy) - dx;
+    let mut d = (2 * dy) - dx;
     let mut y = p1.1;
 
     for x in p1.0..=p2.0 {
@@ -172,11 +172,11 @@ fn plot_line_low(
             return None;
         }
 
-        if D > 0 {
+        if d > 0 {
             y = y + yi;
-            D = D + (2 * (dy - dx));
+            d = d + (2 * (dy - dx));
         } else {
-            D = D + 2 * dy
+            d = d + 2 * dy
         }
     }
 
@@ -196,7 +196,7 @@ fn plot_line_high(
         dx = -dx;
     }
 
-    let mut D = (2 * dx) - dy;
+    let mut d = (2 * dx) - dy;
     let mut x = p1.0;
 
     for y in p1.1..=p2.1 {
@@ -204,11 +204,11 @@ fn plot_line_high(
             return None;
         }
 
-        if D > 0 {
+        if d > 0 {
             x = x + xi;
-            D = D + (2 * (dx - dy));
+            d = d + (2 * (dx - dy));
         } else {
-            D = D + 2 * dx
+            d = d + 2 * dx
         }
     }
 

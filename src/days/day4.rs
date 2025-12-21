@@ -63,7 +63,7 @@ fn rolls_to_remove<'a>(
     grid.iter()
         .cloned()
         .filter(|(_, c)| *c == '@')
-        .filter(|(i, c)| {
+        .filter(|(i, _c)| {
             i.to_pos(*width)
                 .all_directions()
                 .iter()
